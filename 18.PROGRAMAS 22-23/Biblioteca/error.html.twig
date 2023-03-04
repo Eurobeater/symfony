@@ -1,0 +1,36 @@
+{# templates/biblioteca/libro.html.twig #}
+<h1>Libro</h1>
+{# form(form)#}
+  
+
+{{ form_start(form) }}
+ 
+
+{{ form_label(form.id) }}
+{{ form_widget(form.id) }} 
+
+
+{{ form_label(form.titulo) }}
+{{ form_widget(form.titulo) }} 
+
+
+<table>
+<tr><td></td><td></td></tr>
+<tr><td>{{ form_label(form.autores) }}</td><td></td><td>{{ form_label(form.escritores) }}</td></tr>
+<tr><td>{{ form_widget(form.autores) }}</td><td>{{ form_widget(form.Add)}}</br>{{ form_widget(form.Remove)}}</td><td>{{ form_widget(form.escritores) }}</td><td> {{ form_widget(form.Search)}}</br>{{ form_widget(form.Buscar)}}</td></tr>
+</table>
+
+
+
+{{ form_end(form )}}
+
+
+<a href="{{ path( 'listar_libros')}}">Cancel</a>
+
+
+
+
+
+
+	
+

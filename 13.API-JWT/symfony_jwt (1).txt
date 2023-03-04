@@ -1,0 +1,61 @@
+https://medium.com/@joeymasip/how-to-create-an-api-with-symfony-4-and-jwt-b2334a8fbec2
+https://www.kroatoan.es/articulos/json-web-tokens-en-symfony/
+
+
+-- Instalar ymfony/security-bundle
+#composer require symfony/security-bundle
+
+-- Instalar lexik/jwt-authentication-bundle
+
+#php composer.phar require "lexik/jwt-authentication-bundle"
+#composer require "lexik/jwt-authentication-bundle"
+
+
+-- Generar claves de usuario`
+
+$encoder = $this->get('security.encoder_factory')->getEncoder($userClass);
+$encodedPassword = $encoder->encodePassword($plainPassword);
+
+--Crear claves webminal-Linux Online https://www.webminal.org/
+
+$ openssl genrsa -out private.pem -aes256 4096
+$ openssl rsa -pubout -in private.pem -out public.pem
+
+
+--Copiar claves ruta 
+
+/config/jwt
+
+-- Generar password codificada
+
+php bin/console security:encode-password 'your_plain_password' 'AppBundle\Entity\YourUserClass'
+
+
+
+-- Insertar usuario en base de datos
+INSERT INTO `usuario` (`id`, `email`, `roles`, `password`) VALUES (NULL, 'frm666@gmail.com', '[\"ROLE_USER\",\"ROLE_ADMIN\"]', '$2y$13$aS3yhm8sBdyf9sqGXtcrruxtc4oi90WxNkz1WQ8oW325.CH96TgMu');
+
+-- Editar fichero <config/routes.yml
+
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+api_login_check:
+    path: /api/login_check
+    controller: App\Controller\DefaultController::test
+--Utilizar Postman para registro
+
+--Direccion Postman tipo Postman
+http://localhost:8000/api/login_check
+
+--json
+{"username":"frm666@gmail.com","password":"password"}
+
+
+--token  https://jwt.io/ Permite decodificar token
+
+{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NDA2ODQxNzYsImV4cCI6MTY0MDY4Nzc3Niwicm9sZXMiOlsiUk9MRV9VU0VSIiwiUk9MRV9BRE1JTiJdLCJ1c2VybmFtZSI6ImZybTY2NkBnbWFpbC5jb20ifQ.V6itMbsMwyYH14Ybo3rCig-8CFrxUf4ulnDPw6oxCNKM2bWclcjz4QUhKHGsss6pJ3xNFnKpVPOV23bM5_NWfNYHaj1U6fAX6civiWk7727odKHqOLwmROLyX7tUzPL_aXI5joegrI8BAKjHeSTQnISqmhFpKs8fj-e5iiSWf_gn8P3RtDFkXJBfWGc3id4FFWHeG02gwEtbcRQyZybS-E3YDEO5P6b-sjamODVIgpjIoCmNwvQV382peDsRuFBaXioBQhLZzjPEHeYABdakwgMG47vcrB5bP0UKhXLNrq4H5P9J_FYleT-BZZI7A5N7ye0BmN6OSUj63jNVR_HjuPOtMLbOOpYGnBFa0pDaj6IkzGN77_0zKGyw9_1bR7rT-SMUUMWOYdVjTFlMMcIGCpUz8qzpoOaapb_aFMY30u7VoQzOaH7FpACYK4zKJTNqf3A2KqjJkxr0EE8B1v1wtlEY0U5-LJ5_jJEM-Yd6fPWJueCaC6iTFUlf69XW1Ufy-F0NA-pfsxEhdI79jkbyLj1QPxxf4ZW3fFq18ImYKFn1tB14a0QDmzkLDQmKRe1G5CMzKgfiw9ZMTBPXtlg_TM-eqazJTtLGJeKbp8kWlBADADSyVmha9JOMFd-AkgO7XoPyPRSvP9bNb8FYVpHxD62KXDLQS0snTSRC7r-asa4"}
+
+-- Utilizar token en peticiones con Postman rellenando elemento Autorizacion y elemento Token Bearer
+

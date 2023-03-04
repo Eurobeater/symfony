@@ -1,0 +1,43 @@
+
+Testing
+https://jnjsite.com/symfony-tutorial-15-tdd-tests-automaticos-funcionales-y-unitarios/
+
+https://diego.com.es/el-objeto-crawler-en-testing-en-symfony
+
+https://symfonycasts.com/screencast/rest/testing-phpunit#play
+
+https://symfony.com/doc/current/the-fast-track/en/17-tests.html#writing-unit-tests
+
+
+
+-- Instacion phpUnit
+#symfony composer req phpunit --dev
+
+
+-- Creacion de test
+
+#php bin/console make:unit-test
+
+//tests\MyPruebaTest.php
+
+<?php
+namespace App\Tests;
+
+use PHPUnit\Framework\TestCase;
+
+class MyPruebaTest extends TestCase
+{
+    public function testSomething(): void
+    {
+        $this->assertTrue(true);
+    }
+}
+
+
+
+
+-- Ejecutar todos los test
+php bin/phpunit
+
+-- Ejecutar todos tests/Form
+php bin/phpunit tests/Form

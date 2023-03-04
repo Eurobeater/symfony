@@ -1,0 +1,22 @@
+{# templates/biblioteca/listar_libro.html.twig #}
+
+
+<h1>Libros biblioteca</h1>
+<ul>
+
+
+
+
+{% for item in libros %}
+
+	<li>
+	{{item.id}}  {{item.titulo }}  <a href="{{ path('editLibro', {id: item.id}) }}"> >></a>  
+	</li>
+	
+
+
+{% endfor %}
+    
+<a href="{{ path('newLibro') }}">New</a>
+
+</ul>
