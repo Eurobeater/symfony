@@ -1,0 +1,11 @@
+
+
+# config/routes.yaml
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+
+app_prueba:
+    path: /prueba
+    controller: App\Controller\LuckyController::prueba

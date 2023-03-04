@@ -1,0 +1,54 @@
+﻿0. Instalar assets
+
+composer require symfony/asset
+
+1. Colocar carpetas css, jss y images en carpeta public
+
+C:\xampp\htdocs\symfony\<myproyect>\public\<myproyect>
+
+Las rutas relativas son modificadas con el siguiente patron.
+
+
+.header{
+background-image: url("../images/mainlogo.gif");
+}
+
+2. Colocar la plantilla basica en la carpeta /templates
+
+C:\xampp\htdocs\symfony\<myproyect>\templates
+
+
+3. Ajustes de acceso en la plantilla basica mediante la funcion <asset> que redirije a la ruta de recursos de punto 1. ej. default.html.twig
+
+<link href="{{ asset('/css/style.css') }}" rel="stylesheet" type="text/css" />
+
+4. Creo en plantilla basica con los bloques target(default.html.twig)  
+
+  {% block contenido%} {% endblock %} 
+  
+5. En prueba.html.twig  implento herencia de plantilla basica y marco los bloques. La ubicación es la normal
+
+
+{% extends 'default.html.twig' %}
+{% block contenido %}
+<h1>productos</h1>
+
+<table>
+    <tr>
+	<td>Nombre</td>
+	</tr>
+	{% for producto in productos %}
+        <tr>
+		<td>{{ producto.name }}</td>
+		<td>{{ producto.price }}</td>
+		<td>{{ producto.description }}</td>
+		</tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}
+{% block right %}
+{% include 'derecha.html.twig'%}
+{% endblock %}
+

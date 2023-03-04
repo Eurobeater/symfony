@@ -1,0 +1,16 @@
+{# templates/lucky/listar.html.twig #}
+
+
+<h1>{{categoria.name}}</h1>
+<ul>
+{% for item in categoria.products %}
+
+	<li>
+	{{item.id}}  <a href="{{ path('app_get_producto', {id: item.id}) }}">
+		{{item.name}}</a> .
+	</li>
+
+
+{% endfor %}
+
+</ul>

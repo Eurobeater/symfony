@@ -1,0 +1,52 @@
+# config/routes.yaml
+
+app_get_producto:
+    path: /get/{id}
+    controller: App\Controller\LuckyController::get
+
+
+<?php
+// src/Controller/LuckyController.php
+namespace App\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+use App\Entity\Product;
+use Doctrine\ORM\EntityManagerInterface;
+
+use Symfony\Component\HttpFoundation\Response;
+
+class LuckyController extends AbstractController
+{
+    
+	public function get( $id ) {
+       
+ 
+        /*
+         * Repositorio de la entidad
+         * (si no creamos uno y le metemos métodos propios
+         * solamente tendrá los métodos de la clase de la entidad)
+         */
+         $productos = $this->getDoctrine()
+        ->getRepository(Product::class)
+        ->findOneById( $id );
+		
+		
+		if (!$productos) {
+        throw $this->createNotFoundException(
+            'No product found for id '.$id
+        );
+    }
+ 
+        return $this->render('lucky/producto.html.twig', array( 'item' => $productos ));
+    }
+	
+
+}
+
+{# templates/lucky/producto.html.twig #}
+
+<ul>
+	<li>
+	{{item.id}} {{item.name}} {{item.price}} {{item.description}}
+	</li>
+</ul>

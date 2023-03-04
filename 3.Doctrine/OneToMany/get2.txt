@@ -1,0 +1,25 @@
+public function get2( $id ) {
+       
+ 
+        /*
+         * Repositorio de la entidad
+         * (si no creamos uno y le metemos métodos propios
+         * solamente tendrá los métodos de la clase de la entidad)
+         */
+         $producto = $this->getDoctrine()
+        ->getRepository(Product::class)
+        ->findOneById( $id );
+		
+		$categoria = $producto->getCategory();
+		
+		
+		
+		//var_dump( serialize( $categoria->getProducts()));
+		if (!$producto) {
+        throw $this->createNotFoundException(
+            'No product found for id '.$id
+        );
+		}
+ 
+        return $this->render('lucky/categoria.html.twig', array( 'categoria' => $categoria ));
+    }

@@ -1,0 +1,13 @@
+{# templates/lucky/listar.html.twig #}
+
+<ul>
+{% for item in productos %}
+
+	<li>
+	{{item.id}} {{item.name}} {{item.price}} {{item.description}}
+	</li>
+
+
+{% endfor %}
+
+</ul>

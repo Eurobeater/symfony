@@ -1,0 +1,16 @@
+{# templates/biblioteca/libro.html.twig #}
+
+
+
+<h1>Libro</h1>
+
+{{libro.id}} {{libro.titulo}}
+
+<h1>Autor</h1>
+<ul>
+    {% for item in libro.autores %}
+      <li>
+	{{item.id}} {{item.nombre}} {{item.nacionalidad.nacionalidad}} 
+	</li>
+    {% endfor %}
+</ul>

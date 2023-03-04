@@ -1,0 +1,26 @@
+
+# config/routes.yaml
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+
+# the "app_lucky_number" route name is not important yet
+app_lucky_number:
+    path: /lucky/number
+    controller: App\Controller\LuckyController::number
+app_prueba:
+    path: /prueba
+    controller: App\Controller\LuckyController::number
+app_listar:
+    path: /listar
+    controller: App\Controller\LuckyController::listar
+app_addProducto:
+    path: /addProducto
+    controller: App\Controller\LuckyController::addProducto  
+    
+app_par:
+    path: /par/{valor}
+    controller: App\Controller\LuckyController::par  
+    
+    
