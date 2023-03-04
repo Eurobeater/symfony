@@ -1,0 +1,40 @@
+##### DefaultController
+
+	public function renderTwig()
+	{
+			
+		return $this->render('plantilla.html.twig');
+	}
+
+	public function test()
+			
+		return $this->render('renderPlantilla.html.twig');
+	}
+	
+	
+##### routing
+
+app_bundle_renderTwig:
+    path:	  /renderTwig
+    controller: App\Controller\DefaultController::renderTwig
+app_bundle_test:
+    path:	  /test
+    controller: App\Controller\DefaultController::test
+    
+	
+app_addLibro:
+    path: /Lucky/addLibro
+    controller: App\Controller\LuckyController::addLibro	
+	
+### renderPlantilla.html.twig
+
+
+ {{ render(controller( 'App\\Controller\\DefaultController:renderTwig')) }}
+
+
+### plantilla.html.twig
+
+{# Plantilla #}
+
+
+

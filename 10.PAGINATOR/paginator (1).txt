@@ -1,0 +1,152 @@
+﻿-- Instalamos el bundle
+#composer require knplabs/knp-paginator-bundle
+
+Registramos el bundle 
+
+//app/AppKernel.php:
+public function registerBundles()
+{
+    $bundles = array(
+        // ...
+        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+        // ...
+    );
+}
+
+
+-- Config
+// config\packages\paginator.yaml
+# KNP PAGINATOR
+knp_paginator:
+    page_range: 5                       # number of links showed in the pagination menu (e.g: you have 10 pages, a page_range of 3, on the 5th page you'll see links to page 4, 5, 6)
+    default_options:                                 
+        page_name: page                 # page query parameter name
+        sort_field_name: sort           # sort field query parameter name
+        sort_direction_name: direction  # sort direction query parameter name
+        distinct: true                  # ensure distinct results, useful when ORM queries are using GROUP BY statements
+        filter_field_name: filterField  # filter field query parameter name
+        filter_value_name: filterValue  # filter value query paameter name
+    template:                                        
+        pagination: '@KnpPaginator/Pagination/sliding.html.twig'     # sliding pagination controls template                                    
+        sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # sort link template                                
+        filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template
+		
+		
+
+
+--PaginatorController 	
+
+<?php
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+
+use Knp\Component\Pager\PaginatorInterface;
+
+use App\Entity\Product;
+
+
+
+class PaginatorController extends AbstractController
+{
+ 
+	
+    /**
+     * @Route("/paginator", name="paginator_listado", methods={"GET","POST"})
+     */
+	public function index(Request $request, PaginatorInterface $paginator)
+    {
+        // Recuperar el administrador de entidades de Doctrine
+        $em = $this->getDoctrine()->getManager();
+        
+       
+	$query = $em->createQuery('SELECT p FROM App:Product p');
+		
+        // Paginar los resultados de la consulta
+        $pagination = $paginator->paginate( 
+            // Consulta Doctrine, no resultados
+            $query,
+            // Definir el parámetro de la página
+            $request->query->getInt('page', 1),
+            // Items per page
+            5
+        );
+        
+        // Renderizar la vista de twig
+        return $this->render('paginator/listado.html.twig', ['pagination' => $pagination ]);
+    }
+}
+
+
+
+
+//paginator/listado.html.twig
+
+
+
+<div class="container-fluid">
+    <h1>Paginación con KnpPaginator</h1>
+ 
+    {# total items count #}
+    <div class="count">
+        <span class="label label-primary">
+            Entradas en total: {{ pagination.getTotalItemCount }}
+        </span>
+    </div>
+    <br/>
+    <table class="table table-bordered">
+        <tr>
+            {# sorting of properties based on query components #}
+            <th>{{ knp_pagination_sortable(pagination, 'ID', 'p.id') }}</th>
+            <th{% if pagination.isSorted('p.name') %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'NOMBRE', 'p.name') }}
+            </th>
+        </tr>
+ 
+        {# table body #}
+        {% for item in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+</div>
+
+Resultado
+
+    21 - bateria
+    22 - netbook
+
+<< < 1 2 3
+Paginación con KnpPaginator
+Entradas en total: 22
+
+ID 	TITULO
+21 	bateria
+22 	netbook
+<< < 1 2 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+fuente: 
+https://ourcodeworld.co/articulos/leer/802/como-instalar-knppaginatorbundle-para-paginar-resultados-de-consultas-doctrine-en-symfony-4
+http://victorroblesweb.es/2016/02/27/paginacion-con-knppaginatorbundle-en-symfony3/
