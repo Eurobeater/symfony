@@ -1,0 +1,65 @@
+
+
+Instalacion symfony version 4.2
+
+composer create-project symfony/website-skeleton <mi-proyecto> 5.4.*
+
+Instalacion Doctrine-orm
+
+composer require symfony/orm-pack
+
+
+
+Configuracion Doctrine
+
+/config/packages/doctrine.yaml
+
+
+
+Credenciales Database 
+/env
+DATABASE_URL=mysql://root:12345@127.0.0.1:3306/bbdd_mi_proyecto
+
+
+
+
+
+Instalar servidor symfony
+#Descargar binarios 386 o amd de https://symfony.com/download y cambiar path
+
+Ejecutar servidor symfony
+symfony server:start
+
+Instalar twig
+composer require twig
+
+Instalar annotations
+composer require annotations
+
+--Listar routes
+
+php bin/console debug:router
+
+--Generar Entidad
+php bin/console make:entity
+
+--Genera set y get
+php bin/console make:entity --regenerate --overwrite
+
+-- Reingenieria 
+php bin/console doctrine:mapping:import "app/entity" annotation 
+--Actualiza database
+php bin/console doctrine:schema:update --force
+
+php bin/console doctrine:migrations:migrate
+php bin/console make:migration
+
+
+--Operaciones Doctrine
+php bin/console list doctrine
+
+--Ejecutar sentencias dql
+php bin/console doctrine:query:dql  --show-sql <dql>
+
+-- Crear crud
+php bin/console make:crud  <clase>
